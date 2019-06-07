@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WSI.GraphQL.Database;
 
 namespace WSI.GraphQL.Api
 {
@@ -19,10 +21,11 @@ namespace WSI.GraphQL.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<GraphQLContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:GraphQLDb"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, GraphQLContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -30,6 +33,7 @@ namespace WSI.GraphQL.Api
             }
 
             app.UseMvc();
+            dbContext.EnsureSeedData();
         }
     }
 }
