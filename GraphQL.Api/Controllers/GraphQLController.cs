@@ -10,7 +10,7 @@ using WSI.GraphQL.Utilities;
 
 namespace WSI.GraphQL.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class GraphQLController:Controller
     {
         private readonly ISchema _schema;
@@ -38,7 +38,7 @@ namespace WSI.GraphQL.Api.Controllers
                 Inputs = inputs
             };
             var result = await _documentExecuter.ExecuteAsync(executionOtpions);
-            if (result.Errors.Any())
+            if (result.Errors?.Count>0)
             {
                 return BadRequest(result);
             }

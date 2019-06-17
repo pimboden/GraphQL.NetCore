@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphiQL" Version="1.2.0" />
     <PackageReference Include="GraphQL" Version="2.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
@@ -15,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GraphQL.DataAccess\GraphQL.DataAccess.csproj" />
     <ProjectReference Include="..\GraphQL.Database\GraphQL.Database.csproj" />
+    <ProjectReference Include="..\GraphQL.Types\GraphQL.Types.csproj" />
     <ProjectReference Include="..\GraphQL.Utilities\GraphQL.Utilities.csproj" />
   </ItemGroup>
 

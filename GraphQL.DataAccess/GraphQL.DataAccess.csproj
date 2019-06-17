@@ -6,4 +6,8 @@
     <RootNamespace>WSI.GraphQL.DataAccess</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GraphQL.Database\GraphQL.Database.csproj" />
+  </ItemGroup>
+
 </Project>
