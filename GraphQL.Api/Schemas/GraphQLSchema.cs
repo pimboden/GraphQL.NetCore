@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
+using WSI.GraphQL.Api.Mutations;
 using WSI.GraphQL.Api.Queries;
 
 namespace WSI.GraphQL.Api.Schemas
@@ -13,6 +14,7 @@ namespace WSI.GraphQL.Api.Schemas
         public GraphQLSchema(IDependencyResolver resolver):base(resolver)
         {
             Query = resolver.Resolve<PropertyQuery>();
+            Mutation = resolver.Resolve<PropertyMutation>();
         }
     }
 }

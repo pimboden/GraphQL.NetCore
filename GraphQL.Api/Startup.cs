@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WSI.GraphQL.Api.Mutations;
 using WSI.GraphQL.Api.Queries;
 using WSI.GraphQL.Api.Schemas;
 using WSI.GraphQL.DataAccess.Repositories;
@@ -36,6 +37,8 @@ namespace WSI.GraphQL.Api
             services.AddDbContext<GraphQLContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:GraphQLDb"]));
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddSingleton<PropertyQuery>();
+            services.AddSingleton<PropertyMutation>();
+            services.AddSingleton<PropertyIndputType>();
             services.AddSingleton<PropertyType>();
             services.AddSingleton<PaymentType>();
             var serviceProvider = services.BuildServiceProvider();
