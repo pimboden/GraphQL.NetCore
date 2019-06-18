@@ -1,0 +1,14 @@
+{
+  properties {
+    id
+    name
+    city
+    family
+    value
+    payments(last:2) {
+      id
+      value
+      dateCreated
+    }
+  }
+}

@@ -103,6 +103,11 @@ export default {
           icon: 'bubble_chart',
           title: 'Inspire',
           to: '/inspire'
+        }        ,
+        {
+          icon: 'home',
+          title: 'Properties',
+          to: '/realestate'
         }
       ],
       miniVariant: false,

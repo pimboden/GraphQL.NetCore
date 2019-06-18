@@ -1,9 +1,12 @@
-﻿using GraphiQl;
+﻿using System.Diagnostics;
+using GraphiQl;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +23,9 @@ namespace WSI.GraphQL.Api
 {
     public class Startup
     {
+
+        readonly string SiteCorsPolicy = "SiteCorsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +37,24 @@ namespace WSI.GraphQL.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // ********************
+            // Setup CORS
+            // ********************
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            //corsBuilder.AllowAnyOrigin(); // For anyone access.
+            corsBuilder.WithOrigins(Configuration.GetValue<string>("CorsAllowedHosts").Split(';'));
+            corsBuilder.AllowCredentials();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(SiteCorsPolicy, corsBuilder.Build());
+            });
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory(SiteCorsPolicy));
+            });
             services.AddTransient<IPropertyRepository, PropertyRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddDbContext<GraphQLContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:GraphQLDb"]));
@@ -54,6 +77,7 @@ namespace WSI.GraphQL.Api
             }
 
             app.UseGraphiQl();
+            app.UseCors(SiteCorsPolicy);
             app.UseMvc();
             dbContext.EnsureSeedData();
         }

@@ -43,12 +43,20 @@ export default {
     '@nuxtjs/vuetify',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/apollo'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'https://GraphQL.API/graphql'
+      }
+    }
   },
   /*
   ** vuetify module configuration
