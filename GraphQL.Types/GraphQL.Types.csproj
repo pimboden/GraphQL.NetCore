@@ -6,4 +6,13 @@
     <RootNamespace>WSI.GraphQL.Types</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="GraphQL" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GraphQL.DataAccess\GraphQL.DataAccess.csproj" />
+    <ProjectReference Include="..\GraphQL.Database\GraphQL.Database.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,13 @@
+query property($id: Int!) {
+  property(id:$id) {
+    id
+    name
+    family
+    value
+    payments(last:1) {
+      id
+      value
+      dateCreated
+    }
+  }
+}
